@@ -19,6 +19,60 @@
     href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap"
     rel="stylesheet"
   />
+
+  <style>
+    .ball {
+      display: inline-block;
+      border: 1px solid black;
+      border-radius: 40px;
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      background-color: white;
+      margin-left: 10px;
+    }
+
+    #in_lotto {
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    #in_lotto h3,
+    #result h3 {
+      font-size: 35px;
+      margin-bottom: 10px;
+    }
+
+    #in_lotto input {
+      width: 50px;
+      height: 50px;
+      font-size: large;
+      text-align: center;
+    }
+
+    #done {
+      width: 150px;
+      height: 60px;
+      border: #ff85a1ff 3px solid;
+      border-radius: 10px;
+      background-color: white;
+      font-size: large;
+      margin-bottom: 60px;
+    }
+
+    #done:hover {
+      background-color: #f3e9ea;
+      border: rgb(210, 104, 128) 3px solid;
+      border-radius: 10px;
+    }
+
+    #result {
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
@@ -44,7 +98,7 @@
   </nav>
 
   <div id="in_lotto">
-    번호를 선택하세요!
+    <h3>번호를 선택하세요!</h3>
     <div>
       <input id="lotto_1" type="number" name="user_number" min="1" max="45" />
       <input id="lotto_2" type="number" name="user_number" min="1" max="45" />
@@ -53,14 +107,24 @@
       <input id="lotto_5" type="number" name="user_number" min="1" max="45" />
       <input id="lotto_6" type="number" name="user_number" min="1" max="45" />
     </div>
+    <br />
     <button id="done">완료</button>
   </div>
-  <div id="result">추첨 결과는?<br /></div>
+  <br />
+  <div id="result">
+    <h3>추첨 결과는?</h3>
+  </div>
   <script>
     const $done = document.querySelector('#done')
     $done.addEventListener('click', start)
+    var start = false
 
     function start() {
+      if (start == true) {
+        alert('이미 버튼을 누르셨습니다.')
+        return
+      }
+      start = true
       const candidate = Array(45)
         .fill()
         .map((v, i) => i + 1)
@@ -71,7 +135,6 @@
         const value = spliceArray[0]
         shuffle.push(value)
       }
-      console.log(shuffle) //[42,1,2,3,4,5,6]
       const winBalls = shuffle.slice(0, 6).sort((a, b) => a - b)
       const $result = document.querySelector('#result')
 
@@ -114,8 +177,6 @@
         ]
 
         const lotto_value = lotto_val.sort((a, b) => a - b)
-        console.log(lotto_value)
-        console.log(winBalls)
 
         const Same = lotto_value.every(
           (number, index) => number === winBalls[index]
