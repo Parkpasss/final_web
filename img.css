@@ -25,6 +25,7 @@ body {
 
 .main-img img {
   border-top: #fff solid 3px;
+  margin-bottom: 30px;
 }
 
 /* Fade-in animation  */
